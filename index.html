@@ -16,7 +16,9 @@
 
     <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
     <style>
-      *, *::before, *::after {
+      *,
+      *::before,
+      *::after {
         box-sizing: border-box;
       }
       * {
@@ -24,8 +26,9 @@
         padding: 0;
       }
       @font-face {
-        font-family: 'Overpass';
-        src: url('./font/Overpass/Overpass-VariableFont_wght.ttf') format(truetype);
+        font-family: "Overpass";
+        src: url("./font/Overpass/Overpass-VariableFont_wght.ttf")
+          format(truetype);
         font-display: swap;
       }
       :root {
@@ -36,9 +39,149 @@
         --Dark-Blue: hsl(213, 19%, 18%);
         --Very-Dark-Blue: hsl(216, 12%, 8%);
       }
+      body {
+        inline-size: 1.5;
+        -webkit-font-smoothing: antialiased;
+        min-height: 100vh;
+        font-size: 15px;
+        font-family: Overpass;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: hsl(228, 11%, 9%);
+        color: hsl(0, 0%, 100%);
+        font-weight: 400;
+      }
+
+      .card {
+        width: 400px;
+        padding: 30px;
+        border-radius: 20px;
+        background-color: hsl(215, 20%, 16%);
+
+        .icon {
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: hsl(210, 19%, 18%);
+          border-radius: 50%;
+
+          img {
+            width: 17px;
+            height: 16px;
+          }
+        }
+
+        .title {
+          margin: 24px 0 0 0;
+          font-size: 28px;
+        }
+
+        .content {
+          margin: 10px 0;
+          color: hsl(217, 12%, 63%);
+          line-height: 25px;
+        }
+
+        .rate {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 20px 0 30px;
+
+          .grade {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: hsl(217, 12%, 63%);
+            background-color: hsl(210, 19%, 18%);
+            border: 0;
+            cursor: pointer;
+          }
+
+          .grade:hover {
+            background-color: hsl(25, 97%, 53%);
+            color: black;
+          }
+
+          .fixed {
+            background-color: hsl(0, 0%, 100%);
+            color: black;
+          }
+        }
+
+        .submitBTN {
+          width: 340px;
+          height: 50px;
+          border-radius: 50px;
+          font-weight: 700;
+          background-color: hsl(25, 97%, 53%);
+          letter-spacing: 2px;
+          border: 0;
+        }
+
+        .submitBTN:hover {
+          background-color: hsl(0, 0%, 100%);
+          cursor: pointer;
+        }
+      }
+
+      .thank {
+        width: 400px;
+        padding: 30px;
+        border-radius: 20px;
+        background-color: hsl(215, 20%, 16%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .pic {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .selected {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 30px;
+          background-color: hsl(210, 19%, 18%);
+          text-align: center;
+          color: hsl(25, 97%, 53%);
+          margin: 30px;
+          border-radius: 20px;
+
+          p {
+            width: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+
+        .rating {
+          .thank-text {
+            text-align: center;
+            font-size: 28px;
+          }
+
+          .thank-content {
+            text-align: center;
+            color: hsl(217, 12%, 63%);
+            margin-top: 10px;
+          }
+        }
+      }
+
       .attribution {
+        position: absolute;
         font-size: 11px;
         text-align: center;
+        bottom: 0;
       }
       .attribution a {
         color: hsl(228, 45%, 44%);
@@ -47,19 +190,54 @@
   </head>
   <body>
     <!-- Rating state start -->
+    <article class="card" id="ratingCard">
+      <figure class="icon">
+        <img src="./images/icon-star.svg" alt="icon" />
+      </figure>
 
-    How did we do? Please let us know how we did with your support request. All
-    feedback is appreciated to help us improve our offering! 1 2 3 4 5 Submit
+      <p class="title">How did we do?</p>
 
+      <p class="content">
+        Please let us know how we did with your support request. All feedback is
+        appreciated to help us improve our offering!
+      </p>
+
+      <section class="rate">
+        <button class="grade" onclick="handleButtonClicked(this)">1</button>
+        <button class="grade" onclick="handleButtonClicked(this)">2</button>
+        <button class="grade" onclick="handleButtonClicked(this)">3</button>
+        <button class="grade" onclick="handleButtonClicked(this)">4</button>
+        <button class="grade" onclick="handleButtonClicked(this)">5</button>
+      </section>
+
+      <button class="submitBTN" onclick="handleChangePage()">SUBMIT</button>
+    </article>
     <!-- Rating state end -->
 
     <!-- Thank you state start -->
+    <article class="thank" id="thankCard">
+      <picture class="pic">
+        <source
+          media="(max-width:650px)"
+          srcset="./images/illustration-thank-you.svg"
+        />
+        <img src="./images/illustration-thank-you.svg" alt="pic" />
+      </picture>
 
-    You selected
-    <!-- Add rating here -->
-    out of 5 Thank you! We appreciate you taking the time to give a rating. If
-    you ever need more support, don’t hesitate to get in touch!
+      <section class="selected" id="selectedRating">
+        <p>You selected x out of 5</p>
+      </section>
 
+      <!-- Add rating here -->
+      <section class="rating">
+        <p class="thank-text">Thank you!</p>
+
+        <p class="thank-content">
+          We appreciate you taking the time to give a rating. If you ever need
+          more support, don’t hesitate to get in touch!
+        </p>
+      </section>
+    </article>
     <!-- Thank you state end -->
 
     <footer class="attribution">
@@ -68,5 +246,30 @@
         >Frontend Mentor</a
       >. Coded by <a href="#">WEI HU</a>.
     </footer>
+
+    <script>
+      let selectedRating = 0;
+      document.getElementById("thankCard").style.display = "none";
+
+      function handleButtonClicked(btn) {
+        const buttons = document.querySelectorAll(".grade");
+        buttons.forEach((button) => {
+          button.classList.remove("fixed");
+        });
+
+        btn.classList.toggle("fixed");
+
+        selectedRating = btn.textContent;
+      }
+
+      function handleChangePage() {
+        document.getElementById("ratingCard").style.display = "none";
+        document.getElementById("thankCard").style.display = "block";
+
+        document.getElementById(
+          "selectedRating"
+        ).textContent = `You selected ${selectedRating} out of 5`;
+      }
+    </script>
   </body>
 </html>
